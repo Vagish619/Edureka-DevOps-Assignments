@@ -25,14 +25,14 @@ pipeline {
 				sh 'mvn test'
 				
 				// Generate Cobertura code coverage report
-				sh 'mvn cobertura:cobertura'
+				//sh 'mvn cobertura:cobertura'
 				
 				// Archive Cobertura reports
-				cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml',
+				/* cobertura coberturaReportFile: 'target/site/cobertura/coverage.xml',
 						autoUpdateHealth: true,
 						autoUpdateStability: true,
 						failUnhealthy: false,
-						failUnstable: false
+						failUnstable: false */
 			}
 		}
 		
