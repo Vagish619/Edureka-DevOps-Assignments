@@ -1,5 +1,8 @@
 pipeline {
     agent any
+	tools {
+        maven 'maven3'
+    }
     stages {
         stage('Compile') {
             steps {
@@ -11,8 +14,8 @@ pipeline {
 				// Run SonarQube analysis
 					//withSonarQubeEnv('SonarQube Server') {
 					//sh 'mvn sonar:sonar'
-					echo 'Code Reviewing....'
-				}
+				//}
+				echo 'Code Reviewing....'
 			}
         }
 		
