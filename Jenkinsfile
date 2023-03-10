@@ -43,6 +43,7 @@ pipeline {
                 // Add deployment steps here
                 // For example, you can use a tool like Tomcat to deploy your WAR file
 				echo 'deploying...'
+				sh 'mvn tomcat7:deploy'
             }
         }
     }
