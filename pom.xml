@@ -30,8 +30,8 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<version>2.0</version>
 				<configuration>
-					<url>http://35.78.195.236:8006/manager/text</url>
-					<server>35.78.195.236</server>
+					<url>http://18.183.160.60:8080/manager/text</url>
+					<server>18.183.160.60</server>
 					<path>/${project.build.finalName}</path>
 				</configuration>
 			</plugin>

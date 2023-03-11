@@ -1,0 +1,79 @@
+https://blog.devops4me.com/aws-tutorial-how-to-install-tomcat-in-aws-ec2-install/
+
+https://medium.com/@raguyazhin/step-by-step-guide-to-install-apache-tomcat-on-amazon-linux-120748a151a9
+
+
+=====================================================================
+
+wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.73/bin/apache-tomcat-9.0.73.tar.gz
+tar -xvf /root/apache-tomcat-9.0.73.tar.gz
+
+=====================================================================
+mv apache-tomcat-9.0.73 tomcat9
+mv tomcat9 /usr/local/tomcat9
+
+=====================================================================
+useradd -r tomcat
+chown -R tomcat:tomcat /usr/local/tomcat9
+
+=====================================================================
+tomcat.service
+sudo tee /etc/systemd/system/tomcat.service<<EOF
+[Unit]
+Description=Tomcat Server
+After=syslog.target network.target
+
+[Service]
+Type=forking
+User=tomcat
+Group=tomcat
+
+Environment=CATALINA_HOME=/usr/local/tomcat9
+Environment=CATALINA_BASE=/usr/local/tomcat9
+Environment=CATALINA_PID=/usr/local/tomcat9/temp/tomcat.pid
+
+ExecStart=/usr/local/tomcat9/bin/catalina.sh start
+ExecStop=/usr/local/tomcat9/bin/catalina.sh stop
+
+RestartSec=12
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+=====================================================================
+#Reload tomcat service
+sudo systemctl daemon-reload
+
+#Restart/Start tomcat service
+sudo systemctl start tomcat
+
+#Check tomcat service status
+systemctl status tomcat.service
+
+
+=====================================================================
+cd apache-tomcat-9.0.55
+find -name context.xml
+./conf/context.xml
+./webapps/examples/META-INF/context.xml
+./webapps/host-manager/META-INF/context.xml
+./webapps/manager/META-INF/context.xml
+#comment value tag sections in below all files
+vi ./webapps/examples/META-INF/context.xml
+vi ./webapps/host-manager/META-INF/context.xml
+vi ./webapps/manager/META-INF/context.xml
+
+
+<!-- <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+  allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+
+=====================================================================
+
+<role rolename="manager-gui"/>
+<role rolename="manager-script"/>
+<role rolename="manager-jmx"/>
+<role rolename="manager-status"/>
+<user username="admin" password="s3cret" roles="manager-script"/>
+<user username="tomcat" password="s3cret" roles="manager-gui"/>
