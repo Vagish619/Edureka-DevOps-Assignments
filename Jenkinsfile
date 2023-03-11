@@ -11,11 +11,9 @@ pipeline {
         }
         stage('Code Review') {
             steps {
-				// Run SonarQube analysis
-					//withSonarQubeEnv('SonarQube Server') {
-					//sh 'mvn sonar:sonar'
-				//}
+					
 				echo 'Code Reviewing....'
+				sh 'mvn pmd:pmd'
 			}
         }
 		
