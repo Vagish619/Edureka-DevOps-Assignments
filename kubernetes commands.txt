@@ -18,9 +18,12 @@ http://<node-ip>:8888/getemployees
 35.238.146.46
 34.68.94.174
 
-http://35.238.146.46:8888/addemployee
+http://35.238.146.46:31912/
 http://35.238.146.46:8888/getemployees
 
 
 http://34.68.94.174:8888/addemployee
 http://34.68.94.174:8888/getemployees
+
+
+kubectl expose deployment/employee-app --type=NodePort --name=my-app-service --port=8888 --target-port=8888 --node-port=30000
