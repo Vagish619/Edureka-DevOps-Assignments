@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: employee-app
+  labels:
+    app: employee
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: employee
+  template:
+    metadata:
+      labels:
+        app: employee
+    spec:
+      containers:
+      - name: employee
+        image: devopsedu/employee
+        ports:
+        - containerPort: 8888
+        env:
+        - name: DB_HOST
+          value: mongo-service
+          # Replace with the name of your MongoDB service
+          # This environment variable will allow the NodeJS app to connect to the MongoDB service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: employee-service
+spec:
+  selector:
+    app: employee
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8888
+    nodePort: 30001
+    # Replace with the node port of your choice
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-db
+  labels:
+    app: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo
+        image: mongo
+        ports:
+        - containerPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service
+spec:
+  selector:
+    app: mongo
+  ports:
+  - name: mongo
+    port: 27017
+    targetPort: 27017
