@@ -1,0 +1,2 @@
+kubectl apply -f nodejs-deployment.yaml
+kubectl apply -f mongodb-deployment.yaml
