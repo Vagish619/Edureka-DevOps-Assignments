@@ -33,5 +33,6 @@ spec:
     app: mongodb
   ports:
     - protocol: TCP
+    - nodePort: 27017
       port: 27017
       targetPort: 27017

@@ -30,5 +30,6 @@ spec:
     app: nodejs
   ports:
     - protocol: TCP
+    - nodePort: 8888
       port: 8888
       targetPort: 8888
